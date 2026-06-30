@@ -5,6 +5,7 @@ import { DataSeed } from './data.seed';
 import { EmailTemplateSeed } from './email-template.seed';
 import { SystemNotificationSeed } from './system-notification.seed';
 import { PushNotificationSeed } from './push-notification.seed';
+import { SystemSettingSeed } from './system-setting.seed';
 
 async function bootstrap() {
   console.log('🚀 Starting Seed Process...');
@@ -36,6 +37,11 @@ async function bootstrap() {
     const pushNotificationSeed = app.get(PushNotificationSeed);
     // Run push notification seed
     await pushNotificationSeed.seed();
+
+    // Get SystemSettingSeed service
+    const systemSettingSeed = app.get(SystemSettingSeed);
+    // Run system setting seed
+    await systemSettingSeed.seed();
 
     console.log('✅ All seeds completed successfully');
   } catch (error) {

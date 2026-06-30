@@ -18,6 +18,8 @@ import SystemNotificationsList from './pages/SystemNotificationsList';
 import SystemNotificationEdit from './pages/SystemNotificationEdit';
 import PushNotificationsList from './pages/PushNotificationsList';
 import PushNotificationEdit from './pages/PushNotificationEdit';
+import SystemSettings from './pages/SystemSettings';
+import Sitemap from './pages/Sitemap';
 import './index.css';
 
 import { ThemeProvider } from './providers/ThemeProvider';
@@ -171,6 +173,26 @@ function App() {
                 <ProtectedRoute>
                   <AdminLayout>
                     <PushNotificationEdit />
+                  </AdminLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/configurations/system-settings"
+              element={
+                <ProtectedRoute>
+                  <AdminLayout>
+                    <SystemSettings />
+                  </AdminLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/sitemap"
+              element={
+                <ProtectedRoute>
+                  <AdminLayout>
+                    <Sitemap />
                   </AdminLayout>
                 </ProtectedRoute>
               }
