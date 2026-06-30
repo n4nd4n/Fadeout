@@ -9,6 +9,10 @@ import { UserModule } from './modules/user/user.module';
 import { EventModule } from './modules/event/event.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { StaticPageModule } from './modules/static-page/static-page.module';
+import { EmailTemplateModule } from './modules/email-template/email-template.module';
+import { SystemNotificationModule } from './modules/system-notification/system-notification.module';
+import { PushNotificationModule } from './modules/push-notification/push-notification.module';
+import { SystemSettingModule } from './modules/system-setting/system-setting.module';
 
 @Module({
   imports: [
@@ -43,6 +47,11 @@ import { StaticPageModule } from './modules/static-page/static-page.module';
     EventModule,
     DashboardModule,
     StaticPageModule,
+    EmailTemplateModule,
+    SystemNotificationModule,
+    PushNotificationModule,
+    SystemSettingModule,
   ],
 })
 export class AppModule {}
+
