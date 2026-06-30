@@ -1,6 +1,7 @@
 import React from 'react';
 import { LucideIcon, ChevronDown } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { useSidebar } from '../../context/SidebarContext';
 
 interface SidebarItemProps {
   icon: LucideIcon;
@@ -21,6 +22,29 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   onClick,
   className,
 }) => {
+  const { isCollapsed } = useSidebar();
+
+  if (isCollapsed) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        title={label}
+        className={cn(
+          'w-full flex items-center py-2.5 rounded-lg transition-colors focus:outline-none justify-center px-0 cursor-pointer select-none',
+          isActive
+            ? 'bg-theme-active text-brand-600 dark:text-theme-primary'
+            : 'text-theme-secondary hover:bg-theme-hover hover:text-theme-primary',
+          className
+        )}
+      >
+        <div className="flex items-center justify-center min-w-0">
+          <Icon size={22} className="text-current shrink-0" />
+        </div>
+      </button>
+    );
+  }
+
   return (
     <button
       type="button"

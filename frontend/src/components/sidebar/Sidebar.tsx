@@ -12,10 +12,12 @@ import Logo from './Logo';
 import SidebarItem from './SidebarItem';
 import SidebarSubMenu from './SidebarSubMenu';
 import SidebarFooter from './SidebarFooter';
+import { useSidebar } from '../../context/SidebarContext';
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isCollapsed, toggleSidebar } = useSidebar();
 
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
     'user-management': location.pathname.startsWith('/users'),
@@ -83,17 +85,39 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside
-      className="flex flex-col shrink-0 bg-theme-sidebar border-r border-theme-border transition-all duration-300 md:relative md:translate-x-0 fixed top-0 left-0 h-full -translate-x-full z-50 md:z-auto w-[var(--sidebar-width)] w-(--sidebar-width) select-none"
-      style={{ '--sidebar-current-width': 'var(--sidebar-width)' } as React.CSSProperties}
+      className={`flex flex-col shrink-0 bg-theme-sidebar border-r border-theme-border transition-all duration-300 md:relative md:translate-x-0 fixed top-0 left-0 h-full -translate-x-full z-50 md:z-auto select-none ${
+        isCollapsed ? 'w-[72px]' : 'w-[256px]'
+      }`}
+      style={{ '--sidebar-current-width': isCollapsed ? '72px' : '256px' } as React.CSSProperties}
     >
       {/* Sidebar Header containing Logo and Menu Toggle */}
-      <div className="shrink-0 flex items-center h-[var(--header-height)] h-(--header-height) px-4 justify-between">
-        <Logo />
-        <button type="button" className="flex items-center justify-center rounded-lg text-theme-secondary hover:bg-theme-hover transition-colors w-8 h-8" aria-label="Collapse sidebar" title="Collapse menu">
-          <Menu size={20} className="w-5 h-5 text-current" />
-        </button>
-      </div>
-      
+      {isCollapsed ? (
+        <div className="shrink-0 flex items-center flex-col px-2 py-2 gap-1">
+          <button
+            type="button"
+            onClick={toggleSidebar}
+            className="flex items-center justify-center rounded-lg text-theme-secondary hover:bg-theme-hover transition-colors w-full py-2.5 cursor-pointer"
+            aria-label="Expand sidebar"
+            title="Expand menu"
+          >
+            <Menu size={20} className="w-5 h-5 text-current" />
+          </button>
+        </div>
+      ) : (
+        <div className="shrink-0 flex items-center h-[var(--header-height)] px-4 justify-between">
+          <Logo />
+          <button
+            type="button"
+            onClick={toggleSidebar}
+            className="flex items-center justify-center rounded-lg text-theme-secondary hover:bg-theme-hover transition-colors w-8 h-8 cursor-pointer"
+            aria-label="Collapse sidebar"
+            title="Collapse menu"
+          >
+            <Menu size={20} className="w-5 h-5 text-current" />
+          </button>
+        </div>
+      )}
+
       {/* Sidebar Navigation */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden py-2 custom-scroll">
         <nav className="space-y-1 px-2">
@@ -113,7 +137,7 @@ const Sidebar: React.FC = () => {
                   }
                 }}
               />
-              {item.hasSubmenu && expandedMenus[item.id] && (
+              {item.hasSubmenu && expandedMenus[item.id] && !isCollapsed && (
                 <SidebarSubMenu items={item.submenu || []} />
               )}
             </div>
