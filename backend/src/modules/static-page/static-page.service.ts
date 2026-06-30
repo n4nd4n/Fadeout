@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StaticPage } from './entities/static-page.entity';
 import { Admin } from '../admin/entities/admin.entity';
+import * as fs from 'fs';
+import * as path from 'path';
 
 @Injectable()
 export class StaticPageService {
@@ -12,6 +14,37 @@ export class StaticPageService {
     @InjectRepository(Admin)
     private adminRepository: Repository<Admin>,
   ) {}
+
+  private async updateStaticSiteContent(slug: string, content: string) {
+    try {
+      const staticDirPath = path.resolve(process.cwd(), '../fadeout_static/components');
+      
+      let fileName = '';
+      if (slug === 'about-fadeout') {
+        fileName = 'about-fadeout.json';
+      } else if (slug === 'terms-and-conditions') {
+        fileName = 'terms-and-conditions.json';
+      } else if (slug === 'privacy-policy') {
+        fileName = 'privacy-policy.json';
+      }
+
+      if (!fileName) {
+        return;
+      }
+
+      const filePath = path.join(staticDirPath, fileName);
+
+      if (fs.existsSync(staticDirPath)) {
+        const fileContent = JSON.stringify({ content }, null, 2);
+        fs.writeFileSync(filePath, fileContent, 'utf8');
+        console.log(`Successfully wrote updated static content to ${filePath}`);
+      } else {
+        console.warn(`Static page components directory not found at: ${staticDirPath}`);
+      }
+    } catch (error) {
+      console.error('Failed to update static site content file:', error);
+    }
+  }
 
   async findAll(query: any) {
     const page = parseInt(query.page, 10) || 1;
@@ -134,6 +167,9 @@ export class StaticPageService {
     page.updatedAt = new Date();
 
     const saved = await this.staticPageRepository.save(page);
+
+    // Sync to static site components
+    await this.updateStaticSiteContent(saved.slug, content);
 
     return {
       pageId: String(saved.id),
