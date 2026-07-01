@@ -136,16 +136,18 @@ export function Navbar() {
                     App Store
                   </Button>
                 </a>
-                <Button
-                  variant="dark"
-                  onClick={() => setIsOpen(false)}
-                  className="w-full gap-2 justify-center py-3"
-                >
-                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M5,22.06c-.5,0-.93-.3-1.1-.76-.08-.22-.12-.47-.12-.73V3.43c0-.26.04-.51.12-.73.17-.46.6-.76,1.1-.76.19,0,.38.04.56.12l14.1,8.14c.72.42.72,1.46,0,1.88L5.56,21.94c-.18.08-.37.12-.56.12M6.15,4.68V19.32l12.67-7.32L6.15,4.68Z" />
-                  </svg>
-                  Play Store
-                </Button>
+                <a href="https://play.google.com/store/apps/details?id=com.app.fadeout" target="_blank" rel="noopener noreferrer" className="w-full">
+                  <Button
+                    variant="dark"
+                    onClick={() => setIsOpen(false)}
+                    className="w-full gap-2 justify-center py-3"
+                  >
+                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                      <path d="M5,22.06c-.5,0-.93-.3-1.1-.76-.08-.22-.12-.47-.12-.73V3.43c0-.26.04-.51.12-.73.17-.46.6-.76,1.1-.76.19,0,.38.04.56.12l14.1,8.14c.72.42.72,1.46,0,1.88L5.56,21.94c-.18.08-.37.12-.56.12M6.15,4.68V19.32l12.67-7.32L6.15,4.68Z" />
+                    </svg>
+                    Play Store
+                  </Button>
+                </a>
               </div>
             </div>
           </motion.div>
