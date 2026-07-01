@@ -10,7 +10,7 @@ interface ButtonProps extends Omit<HTMLMotionProps<"button">, "ref"> {
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className = "", variant = "primary", children, ...props }, ref) => {
     const baseStyles =
-      "inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 disabled:pointer-events-none disabled:opacity-50 select-none text-[15px] h-11 px-6 py-2.5 rounded-btn cursor-pointer";
+      "group inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/50 disabled:pointer-events-none disabled:opacity-50 select-none text-[15px] h-11 px-6 py-2.5 rounded-btn cursor-pointer";
 
     const variants = {
       primary: "bg-primary hover:bg-primary-hover text-white shadow-xs",

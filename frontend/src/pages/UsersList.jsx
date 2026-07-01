@@ -306,7 +306,7 @@ const UsersList = () => {
 
   const gridTemplateColumns = isDeletedView
     ? "minmax(160px, 1fr) minmax(220px, 1.2fr) 280px 180px"
-    : "minmax(160px, 1fr) minmax(220px, 1.2fr) 170px 120px 140px 130px 140px 180px";
+    : "minmax(160px, 1fr) minmax(220px, 1.2fr) 170px 180px 140px 130px 140px 180px";
 
   return (
     <div className="flex flex-col w-full select-none">
@@ -365,6 +365,7 @@ const UsersList = () => {
           columns={columns}
           data={users}
           gridTemplateColumns={gridTemplateColumns}
+          minWidth={isDeletedView ? "78.75rem" : "82.5rem"}
           sortKey={sortKey}
           sortDirection={sortDirection}
           onSort={handleSort}
