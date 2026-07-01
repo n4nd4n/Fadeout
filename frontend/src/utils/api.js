@@ -49,10 +49,12 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Don't retry if the request is already a refresh attempt
-    if (originalRequest.url === '/auth/refresh') {
-      localStorage.removeItem('accessToken');
-      window.location.href = '/login';
+    // Don't retry or refresh if the request was to any auth endpoint
+    if (originalRequest.url?.includes('/auth/')) {
+      if (originalRequest.url === '/auth/refresh') {
+        localStorage.removeItem('accessToken');
+        window.location.href = '/login';
+      }
       return Promise.reject(error);
     }
 
