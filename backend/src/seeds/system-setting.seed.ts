@@ -20,7 +20,7 @@ export class SystemSettingSeed {
     }
 
     const defaultSettings = this.systemSettingRepository.create({
-      companyName: 'Fadeout Admin Platform',
+      companyName: 'Fadeout',
       maxLoginAttempts: 5,
       sessionTimeoutMinutes: 30,
       copyrightText: '© 2026 Fadeout Admin. All rights reserved.',
