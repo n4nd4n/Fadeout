@@ -6,7 +6,7 @@ import { useSidebar } from '../../context/SidebarContext';
 
 const SidebarFooter: React.FC = () => {
   const { logout, user } = useAuth();
-  const { isCollapsed } = useSidebar();
+  const { isCollapsed, setIsChangePasswordOpen } = useSidebar();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -109,6 +109,10 @@ const SidebarFooter: React.FC = () => {
               </button>
               <button
                 type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  setIsChangePasswordOpen(true);
+                }}
                 className="w-full px-3 py-2 text-left text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-900 rounded transition-colors flex items-center gap-2 cursor-pointer"
               >
                 <svg
@@ -244,6 +248,10 @@ const SidebarFooter: React.FC = () => {
             </button>
             <button
               type="button"
+              onClick={() => {
+                setIsOpen(false);
+                setIsChangePasswordOpen(true);
+              }}
               className="w-full px-3 py-2 text-left text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-900 rounded transition-colors flex items-center gap-2 cursor-pointer"
             >
               <svg

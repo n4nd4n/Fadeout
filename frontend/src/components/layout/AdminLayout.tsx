@@ -2,6 +2,7 @@ import React from 'react';
 import Sidebar from '../sidebar/Sidebar';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
+import ChangePasswordModal from '../common/ChangePasswordModal';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -29,6 +30,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         {/* Fixed Footer */}
         <Footer />
       </div>
+
+      {/* Change Password Dialog Popup */}
+      <ChangePasswordModal />
     </div>
   );
 };

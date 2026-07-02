@@ -4,13 +4,14 @@ const SidebarContext = createContext(null);
 
 export const SidebarProvider = ({ children }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsCollapsed((prev) => !prev);
   };
 
   return (
-    <SidebarContext.Provider value={{ isCollapsed, setIsCollapsed, toggleSidebar }}>
+    <SidebarContext.Provider value={{ isCollapsed, setIsCollapsed, toggleSidebar, isChangePasswordOpen, setIsChangePasswordOpen }}>
       {children}
     </SidebarContext.Provider>
   );

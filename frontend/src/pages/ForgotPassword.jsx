@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import api from '../utils/api';
+import { AuthCard, AuthInput, AuthLabel, AuthButton } from '../components/common/AuthFields';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -9,6 +11,34 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const { forgotPassword } = useAuth();
   const navigate = useNavigate();
+
+  // Dynamic system settings logo
+  const [logoUrl, setLogoUrl] = useState('/assets/images/fadeout-logo.png');
+  const [companyName, setCompanyName] = useState('FadeOut');
+
+  // Fetch company settings on mount
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await api.get('/api/system-setting');
+        if (response.data && response.data.success) {
+          const s = response.data.data;
+          if (s.logoPath) {
+            const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+            const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+            const cleanPath = s.logoPath.startsWith('/') ? s.logoPath : `/${s.logoPath}`;
+            setLogoUrl(`${cleanBaseUrl}${cleanPath}`);
+          }
+          if (s.companyName) {
+            setCompanyName(s.companyName);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching settings for logo:', error);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   const handleChange = (e) => {
     setEmail(e.target.value);
@@ -32,56 +62,112 @@ const ForgotPassword = () => {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
-        <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">OTP Sent</h2>
-          <p className="text-gray-600 mb-6 text-center">If the email exists, you will receive an OTP shortly.</p>
-          <button
-            onClick={() => navigate('/reset-password', { state: { email } })}
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors mb-4"
-          >
-            Proceed to Reset Password
-          </button>
-          <div className="text-center">
-            <Link to="/login" className="text-sm text-blue-500 hover:text-blue-600">Back to Login</Link>
-          </div>
+      <div className="h-screen bg-neutral-50 dark:bg-neutral-950 flex flex-col items-center justify-center p-4 overflow-y-auto py-8">
+        <div className="w-full max-w-lg">
+          <AuthCard>
+            <div className="inline-flex items-center justify-center w-14 h-14 bg-white dark:bg-neutral-800 rounded-2xl shadow-md mb-6 overflow-hidden">
+              <img
+                alt={companyName}
+                className="w-14 h-14 object-contain"
+                src={logoUrl}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://api-fadeout-dev.projectspreview.net/uploads/system-settings/logo/Fadeout_logo-1773734229899-n2ox9tdm-1781509051916-4qhdcury.png';
+                }}
+              />
+            </div>
+            <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">OTP Sent</h1>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-8">
+              If the email exists, you will receive an OTP shortly.
+            </p>
+            <div className="space-y-4">
+              <AuthButton
+                onClick={() => navigate('/reset-password', { state: { email } })}
+              >
+                Proceed to Reset Password
+              </AuthButton>
+              <AuthButton
+                type="button"
+                variant="ghost"
+                onClick={() => navigate('/login')}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-left w-4 h-4" aria-hidden="true">
+                  <path d="m12 19-7-7 7-7"></path>
+                  <path d="M19 12H5"></path>
+                </svg>
+                Back to Login
+              </AuthButton>
+            </div>
+          </AuthCard>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Forgot Password</h2>
-        {error && <div className="bg-red-50 text-red-600 p-3 rounded-md mb-4 text-sm">{error}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={handleChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+    <div className="h-screen bg-neutral-50 dark:bg-neutral-950 flex flex-col items-center justify-center p-4 overflow-y-auto py-8">
+      <div className="w-full max-w-lg">
+        <AuthCard>
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-white dark:bg-neutral-800 rounded-2xl shadow-md mb-6 overflow-hidden">
+            <img
+              alt={companyName}
+              className="w-14 h-14 object-contain"
+              src={logoUrl}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = 'https://api-fadeout-dev.projectspreview.net/uploads/system-settings/logo/Fadeout_logo-1773734229899-n2ox9tdm-1781509051916-4qhdcury.png';
+              }}
             />
           </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? 'Sending...' : 'Send OTP'}
-          </button>
-        </form>
-        <div className="mt-4 text-center">
-          <Link to="/login" className="text-sm text-blue-500 hover:text-blue-600">Back to Login</Link>
-        </div>
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">Forgot Password</h1>
+          <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-8">
+            Enter your registered email to receive a password reset link
+          </p>
+
+          <form onSubmit={handleSubmit} className="text-left space-y-5">
+            {error && (
+              <div className="bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 p-3 rounded-lg text-xs font-medium border border-red-100 dark:border-red-900/50">
+                {error}
+              </div>
+            )}
+            <div>
+              <AuthLabel htmlFor="email" required>
+                Email Address
+              </AuthLabel>
+              <AuthInput
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                placeholder="Enter your email address"
+                value={email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <AuthButton type="submit" disabled={loading}>
+              {loading ? 'Sending...' : 'Send Reset Link'}
+            </AuthButton>
+            <AuthButton
+              type="button"
+              variant="ghost"
+              onClick={() => navigate('/login')}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-left w-4 h-4" aria-hidden="true">
+                <path d="m12 19-7-7 7-7"></path>
+                <path d="M19 12H5"></path>
+              </svg>
+              Back to Login
+            </AuthButton>
+          </form>
+        </AuthCard>
+        <p className="text-center text-xs text-neutral-500 dark:text-neutral-500 mt-5 px-4">
+          For security reasons, we'll send a reset link only if the email is registered.
+        </p>
       </div>
     </div>
   );
 };
 
 export default ForgotPassword;
+
