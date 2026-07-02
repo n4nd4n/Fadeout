@@ -20,6 +20,7 @@ import PushNotificationsList from './pages/PushNotificationsList';
 import PushNotificationEdit from './pages/PushNotificationEdit';
 import SystemSettings from './pages/SystemSettings';
 import Sitemap from './pages/Sitemap';
+import MyProfile from './pages/MyProfile';
 import './index.css';
 
 import { ThemeProvider } from './providers/ThemeProvider';

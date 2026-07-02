@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useSidebar } from '../../context/SidebarContext';
 
 const UserDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

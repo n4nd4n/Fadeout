@@ -10,11 +10,11 @@ export const SidebarProvider = ({ children }) => {
   };
 
   return (
+<<<<<<< HEAD
     <SidebarContext.Provider value={{ isCollapsed, setIsCollapsed, toggleSidebar }}>
+=======
+    <SidebarContext.Provider value={{ isCollapsed, setIsCollapsed, toggleSidebar, isChangePasswordOpen, setIsChangePasswordOpen }}>
       {children}
-    </SidebarContext.Provider>
-  );
-};
 
 export const useSidebar = () => {
   const context = useContext(SidebarContext);
