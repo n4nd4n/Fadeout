@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const UserDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { logout, user } = useAuth();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -104,6 +106,10 @@ const UserDropdown: React.FC = () => {
           <div className="p-1">
             <button
               type="button"
+              onClick={() => {
+                setIsOpen(false);
+                navigate('/my-profile');
+              }}
               className="w-full px-3 py-2 text-left text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-900 rounded transition-colors flex items-center gap-2 cursor-pointer"
             >
               <svg

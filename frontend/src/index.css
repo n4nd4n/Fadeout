@@ -30,7 +30,7 @@
   --sidebar-width: 256px;
   --header-height: 60px;
   --listing-footer-height: 64px;
-  --z-header: 10;
+  --z-header: 40;
 
   /* Theme variables - Light Mode defaults */
   --bg-app: #FAFAFB;
