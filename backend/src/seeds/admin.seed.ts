@@ -28,7 +28,14 @@ export class AdminSeed {
     });
 
     if (existingAdmin) {
-      console.log('✅ Admin already exists, skipping seed');
+      console.log('🔄 Admin already exists, updating credentials...');
+      const hashedPassword = await bcrypt.hash(DEFAULT_ADMIN.password, 10);
+      existingAdmin.password = hashedPassword;
+      existingAdmin.fullName = DEFAULT_ADMIN.fullName;
+      existingAdmin.role = DEFAULT_ADMIN.role;
+      existingAdmin.status = DEFAULT_ADMIN.status;
+      await this.adminRepository.save(existingAdmin);
+      console.log('✅ Default admin updated successfully');
       return;
     }
 

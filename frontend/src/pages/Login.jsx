@@ -11,10 +11,10 @@ const Login = () => {
   const [logoUrl, setLogoUrl] = useState('/fadeout-logo.png');
   const [companyName, setCompanyName] = useState('FadeOut');
 
-  // Load remembered email if present, fallback to default admin credentials
+  // Load remembered email if present
   const [formData, setFormData] = useState({
-    email: localStorage.getItem('rememberedEmail') || 'admin@fadeout.com',
-    password: 'Admin@123',
+    email: localStorage.getItem('rememberedEmail') || '',
+    password: '',
   });
   const [rememberMe, setRememberMe] = useState(!!localStorage.getItem('rememberedEmail'));
   const [showPassword, setShowPassword] = useState(false);
